@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "cwd": "${fileDirname}"
+            "cwd": "C:\\Dev\\bc360_nlp_spacy"
         }
     ]
 }
