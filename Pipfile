@@ -8,6 +8,7 @@ pytest = "*"
 black = "*"
 
 [packages]
+spacy = "*"
 
 [requires]
 python_version = "3.7"
