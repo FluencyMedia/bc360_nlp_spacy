@@ -1,9 +1,7 @@
 from pathlib import Path
 import logging
-import glob
 import csv
 import os
-
 
 # Following generators cribbed from: https://realpython.com/introduction-to-python-generators/
 def generate_filenames():
