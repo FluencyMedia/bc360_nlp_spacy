@@ -8,6 +8,9 @@ pytest = "*"
 black = "*"
 
 [packages]
+spacy = "*"
+jinja2 = "*"
+pyspellchecker = "*"
 
 [requires]
 python_version = "3.7"
