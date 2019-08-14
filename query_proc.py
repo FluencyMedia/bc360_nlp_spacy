@@ -1,5 +1,4 @@
 from pathlib import Path
-import logging
 import random
 import csv
 import os
@@ -7,6 +6,8 @@ import spacy
 from spacy import displacy
 from spellchecker import SpellChecker
 
+from log_manager import logger
+from nlp_manager import nlp
 
 # Following generators cribbed from: https://realpython.com/introduction-to-python-generators/
 def generate_filenames():
@@ -40,9 +41,6 @@ def proc_queries(queries):
     #         os.remove(os.path.join(dir_path, file_name))
     #         logger.debug(f"Removed file: {file_name}")
 
-    logger.info("Loading NLP Model")
-    nlp = spacy.load("en_core_web_lg")
-    logger.info("NLP Model loaded")
     i = 1
 
     spell = SpellChecker()
@@ -88,22 +86,6 @@ def proc_queries(queries):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        datefmt="%I:%M:%S %p",
-    )
-    logger = logging.getLogger("QueryManager")
-
-    lh_file = logging.FileHandler(Path.cwd() / "logs" / "query_manager.log")
-    lh_file.setLevel(logging.INFO)
-    lh_file.setFormatter(
-        logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            datefmt="%d-%b-%y %H:%M:%S",
-        )
-    )
-    logger.addHandler(lh_file)
 
     query_files = generate_filenames()
     q_file = cat_files(query_files)
