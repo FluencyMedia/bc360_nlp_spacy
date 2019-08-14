@@ -5,6 +5,7 @@ import csv
 import os
 import spacy
 from spacy import displacy
+from spellchecker import SpellChecker
 
 
 # Following generators cribbed from: https://realpython.com/introduction-to-python-generators/
@@ -44,6 +45,8 @@ def proc_queries(queries):
     logger.info("NLP Model loaded")
     i = 1
 
+    spell = SpellChecker()
+
     fname = f"nlp-renders" ".html"
     output_path = Path.cwd().joinpath("renders") / fname
 
@@ -56,8 +59,7 @@ def proc_queries(queries):
             "<body style=\"font-size: 16px; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; padding: 4rem 2rem; direction: ltr\">"
         )
         for current_query in queries:
-            print()
-            my_chance = random.randint(1,50)
+            my_chance = random.randint(1, 50)
             if my_chance == 1:
                 logger.info(f"QUERY: {current_query} [{len(current_query)}]")
                 q = nlp(current_query)
@@ -72,12 +74,13 @@ def proc_queries(queries):
                     break
                 # displacy.serve(q, style="ent")
                 logger.info(
-                    f"Text | Lemma | PoS | Label | Tag | Dep_ | Shape | Alpha? | Stop?"
+                    f"Text | Correction | Lemma | PoS | Label | Tag | Dep_ | Shape | Alpha? | Stop?"
                 )
                 for token in q:
                     logger.info(
-                        f"{token.text} | {token.lemma_} | {token.pos_} | {token} | {token.tag_} | {token.dep_} | {token.shape_} | {token.is_alpha} | {token.is_stop}"
+                        f"{token.text} | {spell.correction(token.text)} | {token.lemma_} | {token.pos_} | {token} | {token.tag_} | {token.dep_} | {token.shape_} | {token.is_alpha} | {token.is_stop}"
                     )
+                print()
                 i += 1
             # breakpoint()
         f.write('<figure style="margin-bottom: 6rem">\n    </figure>\n</body>\n</html>')
